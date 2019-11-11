@@ -1,0 +1,194 @@
+@charset "ISO-8859-1";
+
+html{
+	font-size:16px;
+	font-type:Arial, Helvitica, Sans-Serif;
+}
+body{
+	background-color:#e6e6e6;
+}
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #999999;
+	border-radius:15px;
+}
+li {
+	float: left;
+}
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 18px 16px 18px 16px;
+	text-decoration: none;
+}
+#user{
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 4px 10px;
+}
+li a:hover{
+	background-color: #737373;
+}
+li a:focus{
+	background-color: #cccccc;
+}
+input{
+	background-color:#e6e6e6;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0px 9999px #e6e6e6;
+}
+select{
+	background-color:#e6e6e6;
+}
+button{
+	font-weight:bold;
+	background-color:#a6a6a6;
+}
+.tabs{
+	margin-left:1.5em;
+	margin-bottom:0px;
+	border:0px;
+	height:20px;
+}
+.tab{
+	margin-bottom:0px;
+	border-bottom:2px buttongrey solid;
+	vertical-align:middle;
+}
+.tab:focus{
+	border-bottom:2px black solid ;
+}
+.tabbutton{
+	border-bottom:2px solid grey;
+	background-color:#a6a6a6;
+	color:#ffffff;
+	border-radius:10px 10px 0px 0px;
+	padding:7px 5px;
+}
+.tabbutton:hover{
+	background-color:#737373;
+	outline:none;		
+}
+.tabbutton:focus{
+	outline:none;
+	border-bottom:0px solid #cccccc;
+	background-color:#cccccc;
+}
+.tabbutton:after{
+	outline:none;
+	border-bottom:0px solid #cccccc;
+	background-color:#cccccc;
+}
+.contentwrapper{
+	width:100%;
+	min-height:100%;
+	margin-top:-5px;
+	border-top:1px solid grey;
+	border-left:1px solid grey;
+	border-right:1px solid grey;
+	border-radius:15px 15px 0px 0px;
+	background-color:#cccccc;
+	vertical-align:top;
+	overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+.content{
+	border:none;
+	padding:5px auto;
+	margin:5px auto;
+	text-align:top;
+	text-align:center;
+	vertical-align:top;
+	overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+#tableHeader{
+	font-weight:bold;
+	text-align:center;`
+}
+.clickable{
+	font-weight:bold;
+	text-align:center;
+}
+table.sortable thead {
+	font-weight: bold;
+	cursor: pointer;
+}
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+	content: " \25B4\25BE " 
+}
+.folder-content{
+	display: none;
+	overflow: hidden;
+}
+.folder-button{
+	font-size:1.2em;
+}
+.folder-button:hover{
+	background-color:#737373;
+	outline:none;
+	cursor:pointer;
+}
+.span-button{
+	font-size:1em;
+}
+.span-button:hover{
+	background-color:#737373;
+	outline:none;
+	cursor:pointer;
+}
+.alternate tbody tr:nth-child(2n) td{
+	background-color:#a6a6a6;
+}
+.alternate tbody tr:nth-child(2n+1) td{
+	background-color:#cccccc;
+}
+.sortable tbody tr:nth-child(2n) td{
+	background-color:#a6a6a6;
+}
+.sortable tbody tr:nth-child(2n+1) td{
+	background-color:#cccccc;
+}
+td{
+	vertical-align:top;
+}
+hr{
+	width:60em; 
+	border-color:#a6a6a6;
+	border-style:solid bold;
+	margin:2em auto;
+}
+table{
+	border:1px solid #808080;
+}
+textarea{
+	background-color:transparent;
+	border:1px solid #808080;
+	overflow:hidden;
+}
+button{
+	cursor:pointer;
+}
+.fileinput{
+	cursor:pointer;
+}
+.h3{
+	color:#000000;
+	font-size:20px;
+}
+.h4{
+	color:#000000;
+	font-size:10px;
+}
+.h5{
+	color:#000000;
+	font-size:1.5em;
+}
