@@ -5,14 +5,14 @@
 <!DOCTYPE>
 <html>
 <head>
-	<link rel="shortcut icon" href="include/icons/logo.png" />
-	<link rel="shortcut icon" href="include/icons/logo.png" />
+	<link rel="shortcut icon" href="include/icons/view_refresh.png" />
+	<link rel="shortcut icon" href="include/icons/view_refresh.png" />
     <link rel="stylesheet" href="vmsstyle.css">
-	<title>VMS</title>
+	<title>PMS</title>
 </head>
 <body>
     <div style="text-align:center;width:600px;margin:0 auto;">
-    	<img src="include/icons/logo.jpg" width="400px" height="200px"/>
+    	<img src="include/icons/view_refresh.png" width="200px" height="200px"/>
     	<br>
     	<h3>Personnel Management System</h3>
     </div>

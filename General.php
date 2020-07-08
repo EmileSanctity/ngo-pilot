@@ -5,7 +5,7 @@
     $userid=str_clean(valunscramble($_GET[idunscramble('userid')]));
     $secid=str_clean(valunscramble($_GET[idunscramble('secid')]));
     $navid=str_clean(valunscramble($_GET[idunscramble('navid')]));
-    timer(20,$userid);
+   /// timer(20,$userid);
     //Sys logs
     $array=array('user',$userid);
     $tables=array('');
@@ -29,7 +29,7 @@
     <script type="text/javascript">
         var something=0;
         tabstyle('tabbutton1','tr0','tr1');
-        //ajax('personsearchbox');XML
+        //ajax('personsearchbox');
         setTimeout(function(){
             window.location.href= 'logout.php?<?php echo(idscramble('userid').'='.valscramble($userid)); ?>';},1200000);
         refresh();
@@ -192,6 +192,7 @@
                     case 'personintakedocupdate':
                         response='personintakedocs';
                     break;
+                    alert("Response = "+response);
                 }
                 //alert("In readystate\r"+this.responseText);
                 document.getElementById(response).innerHTML=this.responseText;
@@ -206,7 +207,7 @@
                     case 'loadaddictionsS':
                     break;
                     case 'profile':
-                        //alert("window.scrollTo(0,0);");
+                        //alert("window.scrollTo(0,0); "+response);
 						window.scrollTo(0,0);
                     break;
                     case 'profileedit':
@@ -302,31 +303,31 @@
                     '&'.idscramble('nav').'='.valscramble(1)); ?>"+string,true);
             break;
             case 'profile':
-                //alert('profile');
+                //alert('profile ');
                 xhttp.open("Get","PersonProfileResult.php?<?php echo(idscramble('userid').'='.valscramble($userid).
                     '&'.idscramble('secid').'='.valscramble($secid).
                     '&'.idscramble('nav').'='.valscramble(1)); ?>"+string,true);
             break;
             case 'loadaddictionsR':
-                //alert('loadaddictions');
+                ////alert('loadaddictions');
                 xhttp.open("Get","PersonSearchAddictionsList.php?<?php echo(idscramble('userid').'='.valscramble($userid).
                     '&'.idscramble('secid').'='.valscramble($secid).
                     '&'.idscramble('nav').'='.valscramble(1)); ?>"+string,true);
             break;
             case 'loadaddictionsS':
-                //alert('loadaddictions');
+                ////alert('loadaddictions');
                 xhttp.open("Get","PersonSearchAddictionsList.php?<?php echo(idscramble('userid').'='.valscramble($userid).
                     '&'.idscramble('secid').'='.valscramble($secid).
                     '&'.idscramble('nav').'='.valscramble(1)); ?>"+string,true);
             break;
             case 'personsearchlist':
-                //alert('personsearchlist');
+                ////alert('personsearchlist');
                 xhttp.open("GET","PersonSearchList.php?<?php echo(idscramble('userid').'='.valscramble($userid).
                     '&'.idscramble('secid').'='.valscramble($secid).
                     '&'.idscramble('nav').'='.valscramble(1)); ?>"+string,true);
             break;
             case 'personsearchbox':
-                //alert("In personsearchbox");
+                ////alert("In personsearchbox");
                 xhttp.open("GET","PersonSearchForm.php?<?php echo(idscramble('userid').'='.valscramble($userid).
                     '&'.idscramble('secid').'='.valscramble($secid).
                     '&'.idscramble('nav').'='.valscramble(1)); ?>",true);
@@ -337,7 +338,7 @@
                         '&'.idscramble('nav').'='.valscramble(1)); ?>",true);
             break;
             case 'personintakesave':
-            ///alert('personintakesave');
+            /////alert('personintakesave');
                 xhttp.open("GET","PersonIntakeSave.php?<?php echo(idscramble('userid').'='.valscramble($userid).
                         '&'.idscramble('secid').'='.valscramble($secid).
                         '&'.idscramble('nav').'='.valscramble(1)); ?>"+string,true);
@@ -378,7 +379,7 @@
                         '&'.idscramble('nav').'='.valscramble(1)); ?>"+string,true);
             break;
         }
-        
+        //alert("xhttp.send()");
         xhttp.send();
     }
     function personsearch(){
@@ -414,11 +415,11 @@
                     '&exit='+exit+
                     '&completed='+completed+
                     '&druglist[]='+druglist+' ';
-        //alert(string);
+        ////alert(string);
         ajax('personsearchlist',string);
     }
     function loadaddictions(el){
-        //alert(el.value);
+        ////alert(el.value);
         if(el.value>1 && !document.getElementById("ajaxresponseS") ){
             var searchtable=document.getElementById("searchform");
             var ajaxresponse=searchtable.insertRow(8);
@@ -454,7 +455,7 @@
         var file=document.getElementById("pimage");
         var personid=document.getElementById('person').value;
         var image=file.files[0];
-        //alert(image.name);
+        ////alert(image.name);
         var xhttp;
         var data=new FormData();
         data.append('file',image);

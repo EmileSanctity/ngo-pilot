@@ -5,7 +5,7 @@
 	$userid=str_clean(valunscramble($_GET[idunscramble('userid')]));
 	$secid=str_clean(valunscramble($_GET[idunscramble('secid')]));
 	$navid=str_clean(valunscramble($_GET[idunscramble('navid')]));
-	timer(20,$userid);
+	//timer(20,$userid);
 //Sys logs
 	$array=array('user',$userid);
 	$tables=array('');
@@ -156,8 +156,7 @@ function ajax(type,string){
 				folders('counsellorhistoryfolder');
 			}
 			if(type == 'profile'){
-				setTimeout(function(){
-					refresh();window.scrollTo(0,0);},3000);
+				window.scrollTo(0,0);
 			}
 		}
 	};

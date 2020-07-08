@@ -1,4 +1,5 @@
 <?php
+
 	require_once('vmscFunctions.php');
 
 	$email=str_clean($_POST['email']);
@@ -8,18 +9,23 @@
 	$userid=0;
 	$activeid=0;
 	$secid=0;
-	//echo($email.' '.$password.'<br>');
-	userloginupdate();
+	
+	//echo('Login Details: '.$email.' Pass: '.$password.'<br>');
+	
+	//userloginupdate();
+
 
 	if(isset($email) && $email>"" && $password>"" && isset($password)){
+
 		$sql='select UserId,count(UserId) as Chk
 				from users 
 			   where Email=? 
 			     and Password=?';
 		$types="ss";
 		$chk=0;
-		$params=array($email,sha1($password));
+		$params=array($email,$password);
 		$result=query($types,$params,$sql);
+
 		while($row=$result->fetch_assoc()){
 			$chk=$row['Chk'];
 			$userid=$row['UserId'];
@@ -27,11 +33,12 @@
     	echo('<br>$chk :'.$chk.' $userid :'.$userid);
 
 	//Sys logs
-		$array=array('Email',$email,'Password',sha1($password));
+		$array=array('Email',$email,'Password',$password);
 		$tables=array('users');
 		logs($userid,'r','logincheck',$array,$tables);
 
-		if($chk>0){
+		if($chk > 0){
+	
 			echo('<br>Chk: '.$chk);
 			$date=Date('Y-m-d H:i:s');
         	echo('<br>Date :'.$date);
@@ -55,6 +62,7 @@
 			}mysqli_free_result($result);
 
 			echo('<br>ActiveId :'.$activeid);
+
 			$array=array('userid',$userid,'LoggedIn',$date);
 			$tables=array('userlogin');
 			logs($userid,'c','logincheck',$array,$tables,$activeid);

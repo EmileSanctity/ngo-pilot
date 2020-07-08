@@ -1,7 +1,7 @@
 <?php
 	require_once('vmscFunctions.php');
 	require_once('vmscPersonProfileSql.php');
-
+	
 //SysParam & Auto Logout & Logging
 	$userid=str_clean(valunscramble($_GET[idunscramble('userid')]));
 	$secid=str_clean(valunscramble($_GET[idunscramble('secid')]));
@@ -9,7 +9,7 @@
 //Sys logs
 	$array=array('user',$userid);
 	$tables=array('');
-	logs($userid,'l','PersonSearchList',$array,$tables);
+	//logs($userid,'l','PersonSearchList',$array,$tables);
 
 //App Params
 	$personid=str_clean(valunscramble($_GET[idunscramble('personid')]));
@@ -17,11 +17,11 @@
 	if(isset($_GET[idunscramble('edit')])){
 		$edit=str_clean(valunscramble($_GET[idunscramble('edit')]));
 	}
-echo('PersonId: '.$personid.'<br>Edit: '.$edit);
+//echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 
 //Variables
 	$reply='';
-
+	
 //Personal Info & Profile picture
     $visits=0;
     $query="select count(*) as Visits from counsellor where PersonId=?";
@@ -37,7 +37,7 @@ echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 	$params=array($personid);
 	$result=query($types,$params,$query);
 	$reply.='';
-
+	
 //Personal Info & Profile picture
 	while($row=$result->fetch_assoc()){
 		$ids=explode(",",$row['AddictionIdList']);
@@ -167,8 +167,7 @@ echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 		//Personal Info & Profile picture
 		//Result
 		if($edit==0){
-			$reply.='<form>
-
+			$reply.='	<form>
 							<div id="personimage" style="float:left;padding:10px;">
 								<img src="'.$row['Image'].'" width="200" height="200" />
 							</div>
@@ -231,8 +230,9 @@ echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 						</form>';
 		}
 	}mysqli_free_result($result);
-
+	
 //Person Intake Docs
+/*
     $cnt=0;
     $query=PersonProfileSql::get_person_intake_docs_count();
     $types="i";
@@ -350,7 +350,7 @@ echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 						</td>
 					</tr>';
 	}
-
+	*/
 //Person Entry & Exit
 	$query=PersonProfileSql::get_entry_exit();
 	$types="ii";
@@ -364,7 +364,8 @@ echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 //Person Entry & Exit
 //Result & Editor
 	if($edit==1){
-		$reply.='		<tr>
+		$reply.='	<table style="border:1px solid #cccccc;width:800px;margin:0 auto;">
+						<tr>
 							<td style="text-align:center;">
 								<form>
 									 <div id="entryexit" style="clear:both;" >
@@ -423,7 +424,8 @@ echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 //Person Entry & Exit
 //Result
 	if($edit==0){
-		$reply.='		<tr>
+		$reply.='	<table style="border:1px solid #cccccc;width:800px;margin:0 auto;">
+						<tr>
 							<td style="text-align:center;">
 								<form>
 									<div id="entryexit"  style="width:800px;border:1;margin:0 auto;">
@@ -461,7 +463,7 @@ echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 						</tr>';
 	}
 	mysqli_free_result($result);
-
+	
 
 //Person Medical
 	$query=PersonProfileSql::get_medical();
@@ -889,7 +891,7 @@ echo('PersonId: '.$personid.'<br>Edit: '.$edit);
 							</td>
 						</tr>';
 	}
-//Person spouse :) I cant wait to be married :D :D :D :D :D :D :D :D :D
+//Person spouse 
 //Result
 	if($edit==0){
 		$reply.='		<tr>
@@ -1466,7 +1468,7 @@ if($edit==1){
 									</div>
 								</form>
 							</td>
-						</tr>';
+						</tr></table>';
 	}
 //Person Department
 //Result
@@ -1509,7 +1511,7 @@ if($edit==1){
 									</div>
 								</form>
 							</td>
-						</tr>';
+						</tr></table>';
 	}
 
 //Return result

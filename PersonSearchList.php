@@ -172,7 +172,7 @@
 	//echo('<br>types: '.$types.'<br>params: '.implode(",",$params).'<br>sql: '.$sql);
 	$result=query($types,$params,$sql);
 	$count=mysqli_num_rows($result);
-	$reply='<div style="width:1200px;margin:0 auto;padding:0 auto;overflow:auto;">
+	$reply='<div style="width:1400px;margin:0 auto;padding:0 auto;overflow:auto;">
 			<hr>
 			<h4 style="font-size:20px">Personnel table - Showing '.$count.' results.</h4><h5 style="margin-top:0px;padding-top:0px;">Click on table headers to order ASC or DESC</h5>
 				<table class="sortable" id="result" style="max-width:100%;">

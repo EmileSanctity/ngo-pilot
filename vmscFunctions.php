@@ -7,22 +7,25 @@
 	require 'PHPMailer/src/PHPMailer.php';
 	require 'PHPMailer/src/SMTP.php';
 	*/
-	//require_once 'vendor/autoload.php';
+    //require_once 'vendor/autoload.php';
+    
+
+
 function db_connect(){
     $connect=1;
     ///Development
     if($connect === 1){
-        $db='vms';
+        $db='ngopilot';
         $host='localhost';
-        $login='phpappuser';
-        $passwd='3213219514';
+        $login='ngopilot';
+        $passwd='3213219514ZXCZXC';
     }
     ///Production
     if($connect === 2){
-        $db='';
-        $host='';
-        $login='';
-        $passwd='';
+        $db='ngopilot';
+        $host='localhost';
+        $login='ngopilot';
+        $passwd='3213219514ZXCZXC';
     }
 
     $conn=mysqli_connect($host,$login,$passwd,$db);
@@ -87,7 +90,7 @@ function timer($val,$userid){
     //echo('Timer Function: Val: '.$val.'Diff in min.: '.$diff.' LogId: '.$logid.' ');
     if($diff>$val){
         #echo('<br>'.$diff.'<br>');
-        header('Location:logout.php?'.idscramble('userid').'='.valscramble($userid).'&'.idscramble('logid').'='.valscramble($logid));
+       // header('Location:logout.php?'.idscramble('userid').'='.valscramble($userid).'&'.idscramble('logid').'='.valscramble($logid));
     }
 }
 function style(){
@@ -129,18 +132,24 @@ function navhtml($userid,$secid,$navid){
 			</div></li></ul></div>');
 }
 function logs($userid,$action,$page,$array,$tables,$activeid=null){
+
+    //echo('<br>Just in logs()<pre>');var_dump( array( $userid,$action,$page,$array,$tables,$activeid ) );echo('</pre>');
+
     $dump='Params:';
     foreach($array as $val){
         $dump.=$val.'::';
     }
+    
     $dump.='tables:';
     foreach($tables as $table){
         $dump.=$table.':';
     }
+    
     $query='insert into logs(UserId,LoggedOn,Page,Action,Dump,ActiveId)values(?,now(),?,?,?,?)';
     $types='isssi';
     $params=array($userid,$page,$action,$dump,$activeid);
     query($types,$params,$query);
+
 }
 function upload($userid,$personid,$page,$filetype,$multiple,$sickid=0,$discid=0){
     /*
@@ -171,8 +180,9 @@ function upload($userid,$personid,$page,$filetype,$multiple,$sickid=0,$discid=0)
             switch ($filetype){
                 case 'image':
                     if(in_array($ext,$images) === true && $filesize <= 10485760){
-                        $query='insert into personimages(ImageId,PersonId,Ext,UploadedOn,Name)
-									values(0,?,?,now(),?)';
+                        //echo('In image<br>');
+                        $query='insert into personimages(PersonId,Ext,UploadedOn,Name)
+									values(?,?,now(),?)';
                         $types="iss";
                         $params=array($personid,$ext,$filename);
                         $result=query($types,$params,$query);
@@ -185,9 +195,10 @@ function upload($userid,$personid,$page,$filetype,$multiple,$sickid=0,$discid=0)
                             $imageid=$row['ImageId'];
                             $ext=$row['Ext'];
                         }mysqli_free_result($result);
+                        //echo('<pre>');var_dump($_FILES);//echo('</pre>');
                         $path="include/personimages/".$imageid.".".$ext;
-                        echo("<br>".$_FILES['file']['tmp_name']." ".$path);
-                        
+                        //echo("<br>TMP PATH".$_FILES['file']['tmp_name']."<br>NEW PATH".$path);
+                        //echo exec('<br>whoami');
                         move_uploaded_file($_FILES['file']['tmp_name'],$path);
 						$reply.='Your file '.substr($filename,0,9).' was uploaded.<br>size: '.bytescalc($filesize,2).'';
 
@@ -262,7 +273,7 @@ function upload($userid,$personid,$page,$filetype,$multiple,$sickid=0,$discid=0)
                             $ext=$row['Ext'];
                         }mysqli_free_result($result);
                         $path="include/personintakedocs/".$intakeid.".".$ext;
-                        echo("<br>".$_FILES['file']['tmp_name']." ".$path);
+                        //echo("<br>".$_FILES['file']['tmp_name']." ".$path);
                         
                         move_uploaded_file($_FILES['file']['tmp_name'],$path);
 						$reply.='Your file '.substr($filename,0,9).' was uploaded. Size: '.bytescalc($filesize,2).'';
@@ -616,8 +627,25 @@ function mailbdays($userid){
 	if($cnt>0){
         $query='select P.Name,
 					   P.Surname,
-					   case when char_length(IDNo)>7 then floor(datediff(date(now()),date(concat(case when substring(ltrim(IDNo),1,1)<=2 then 	concat("20","",substring(ltrim(IDNo),1,2)) else concat("19","",substring(ltrim(IDNo),1,2)) end,"-",
-	                   substring(ltrim(IDNo),3,2),"-",substring(ltrim(IDNo),5,2))))/365.25) else "Undetermined" end as Age
+                       case when char_length(IDNo)>7 then 
+                        floor(
+                            datediff(
+                                    date(
+                                        now()
+                                    ),
+                                    date(
+                                        concat(
+                                            case when substring(ltrim(IDNo),1,1)<=2 
+                                                 then concat("20","",substring(ltrim(IDNo),1,2)) 
+                                                 else concat("19","",substring(ltrim(IDNo),1,2)) end,
+                                            "-",
+                                            substring(ltrim(IDNo),3,2),
+                                            "-",
+                                            substring(ltrim(IDNo),5,2)
+                                        )
+                                    )
+                                )/365.25
+                            ) else "Undetermined" end as Age
 				  from perssonel P
 				  join (select PersonId,max(EntryDate) as EntryDate,max(ExitDate) as ExitDate
 						  from personentryexit
@@ -643,6 +671,7 @@ function mailbdays($userid){
 
 	mailmessage($userid,$subject,$body);
 }
+
 function mailmessage($userid,$subject,$body){
 
 	$name='';
@@ -663,14 +692,14 @@ function mailmessage($userid,$subject,$body){
         //Server settings
         $mail->SMTPDebug = 0;                                 // Enable verbose debug output
         $mail->isSMTP();                                      // Set mailer to use SMTP
-        $mail->Host = 'smtp.vistarus.co.za';  // Specify main and backup SMTP servers
+        $mail->Host = 'smtp.vistarus.co.za';                  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true;                               // Enable SMTP authentication
-        $mail->Username = 'it@vistarus.co.za';                 // SMTP username
-        $mail->Password = 'cV3#JxCt49a';                           // SMTP password
+        $mail->Username = 'it@vistarus.co.za';                // SMTP username
+        $mail->Password = 'cV3#JxCt49a';                      // SMTP password
         $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587;                                    // TCP port to connect to
         $mail->SMTPOptions = array(
-            'ssl' => array(
+                'ssl' => array(
                 'verify_peer' => false,
                 'verify_peer_name' => false,
                 'allow_self_signed' => true
@@ -693,17 +722,31 @@ function mailmessage($userid,$subject,$body){
 		echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
 	}
 }
+
+
+
 function userloginupdate(){
+    // Other option to have instead of now in case statement is : max(LoggedOn)
+
+    $query = 'select UserId, unix_timestamp(now()), unix_timestamp(now())-10 
+               from userlogin 
+              where LoggedIn > unix_timestamp(now()) - 10 
+                and (LoggedOut is null 
+                 or LoggedOut = "0000-00-00 00:00:00")';
+
+
 	$query='update userlogin UL
-			   set UL.LoggedOut=(select case when (UNIX_TIMESTAMP(now())-max(UNIX_TIMESTAMP(LoggedOn)))>1800
+			   set UL.LoggedOut=(select case when (UNIX_TIMESTAMP(now())-max(UNIX_TIMESTAMP(LoggedOn)))>10
 											 then max(LoggedOn) else "" end
 								   from logs L
 								  where L.UserId=UL.UserId )
-			 where UL.LoggedOut="0000-00-00 00:00:00"
-				OR UL.LoggedOut is null';
+			 where UL.LoggedOut= "0000-00-00 00:00:00"
+                OR UL.LoggedOut is ?';
+
 	$types="s";
-	$params=array('0000-00-00 00:00:00');
-	$result=query($types,$params,$query);
+	$params=array('null');
+    $result=query($types,$params,$query);
+    var_dump($result);
 	mysqli_free_result($result);
 }
 function mailpasswd($userid){

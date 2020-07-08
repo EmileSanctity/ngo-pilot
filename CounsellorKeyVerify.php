@@ -5,7 +5,7 @@
 //SysParam & Auto Logout & Logging
 	$userid=str_clean(valunscramble($_GET[idunscramble('userid')]));
 	$secid=str_clean(valunscramble($_GET[idunscramble('secid')]));
-	timer(20,$userid);
+	//timer(20,$userid);
 //Sys logs
 	$array=array('user',$userid);
 	$tables=array('');
